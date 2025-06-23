@@ -3,7 +3,10 @@ import type { TAnime, IAnimeCard, ApiResponse } from "~/shared/types";
 export const useGetAnimeList = async (page: number, limit: number): Promise<IAnimeCard[]> => {
   const config = useRuntimeConfig();
 
-    const response = await $fetch<ApiResponse>('https://anilibria.top/api/v1/anime/catalog/releases', {
+  const api = config.public.ANILIBRIA_API
+  const aniList = config.public.ANIME_LIST
+  
+    const response = await $fetch<ApiResponse>(`${api}${aniList}`, {
       params: { page, limit },
       headers: {
         'Cache-Control': 'no-cache',
@@ -22,7 +25,7 @@ export const useGetAnimeList = async (page: number, limit: number): Promise<IAni
       id: item.id,
       code: item.code || '',
       name: item.name || '',
-      poster: item.poster?.preview || '',
+      poster: `${api}${item.poster?.preview}` || '',
       description: item.description ?? '',
       season: item.season ?? '',
       year: item.year ?? 0

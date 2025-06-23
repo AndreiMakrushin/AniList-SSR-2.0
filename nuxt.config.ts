@@ -1,15 +1,69 @@
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
+import Aura from "@primevue/themes/aura";
 export default defineNuxtConfig({
   ssr: true,
 
   dir: {
-    pages: "app/routes",
-    layouts: "app/layouts",
-    middleware: "app/middleware",
-    assets: "shared/assets",
-    public: "shared/public"
+    pages: 'app/routes',
+    layouts: 'app/layouts',
+    middleware: 'app/middleware',
+    modules: 'app/modules',
+    assets: 'shared/assets',
+    public: 'shared/public',
+    static: 'shared/static',
   },
+  modules: [
+    "@nuxt/eslint",
+    "@nuxtjs/tailwindcss",
+    "@vueuse/nuxt",
+    "@pinia/nuxt",
+    "@primevue/nuxt-module"
+  ],
+
+  css: ["primeicons/primeicons.css"],
+
+  primevue: {
+    autoImport: true,
+    options: {
+      theme: {
+        preset: Aura,
+        options: {
+          prefix: "p",
+          darkModeSelector: ".fake-app-dark",
+          cssLayer: {
+            name: "primevue",
+            order: "tailwind-base, primevue, tailwind-utilities",
+          },
+        },
+      },
+    },
+    components: {
+      exclude: ['Form', 'FormField'],
+      include: "*",
+      prefix: "Prime"
+    },
+  },
+
+  tailwindcss: {
+    viewer: false,
+    configPath: "nuxt-tailwind.config",
+  },
+
+  runtimeConfig:{
+    public:{
+      SUPABASE_URL: "",
+      SUPABASE_KEY: "",
+      ANILIBRIA_API: "",
+      ANIME_LIST: "",
+      ANIME_SINGLE: "",
+      ANIME_SEARCH: "",
+      ANIME_SIMILAR: "",
+      ANIME_POSTER: ""
+    }
+  },
+
+  plugins: ["~/plugins/supabase.client"],
 
   alias: {
     '@': path.resolve(__dirname),
@@ -57,7 +111,10 @@ export default defineNuxtConfig({
     },
     build: {
       minify: false,
-      cssCodeSplit: false
+      cssCodeSplit: false,
+      rollupOptions: {
+        external: ['quill', 'chart.js/auto']
+      }
     }
   },
   typescript: {
@@ -74,8 +131,9 @@ export default defineNuxtConfig({
   nitro: {
     compressPublicAssets: true,
     
+    
   },
-  modules:[
-    '@pinia/nuxt',
-  ]
+  build: {
+    transpile: ['primevue', 'quill']
+  },
 })

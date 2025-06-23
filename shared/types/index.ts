@@ -65,18 +65,19 @@ export interface IUser {
     password: string
   }
   interface ISeason {
-    string: string
-    code: number
-    year: number
-    week_day: number
+    string?: string
+    description?: string
+    code?: number
+    year?: number
+    week_day?: number
   }
   export interface IAnimeCard{
     id: number
     code: string
     name: {
-      english: string
-      main: string
-    }
+      english: string | null
+      main: string | null
+    } | null
     poster: string
     description: string
     season: ISeason
