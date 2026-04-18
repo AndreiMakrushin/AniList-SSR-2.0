@@ -1,9 +1,9 @@
 import type {IUser, TUserResponse, ILoginForm} from '~/shared/types'
-import { useSupabaseApi } from '@/shared/composables/useSupabaseApi'
+import { useSupabaseAuth } from './useSupabaseAuth'
 
 export const useAuth = async (credentials: ILoginForm): Promise<TUserResponse<IUser>> => {
 
-  const { signIn, getUserFromTable } = useSupabaseApi()
+  const { signIn, getUserFromTable } = useSupabaseAuth()
 
   const { email, password } = credentials
   

@@ -1,16 +1,20 @@
 <script setup lang="ts">
-import type { IAnimeCard } from "@/shared/types";
+import type {ModelsAnimeReleasesV1Release} from "~/api-client/Api"
 
-defineProps<{
-  anime: IAnimeCard | null;
+const props = defineProps<{
+  anime: ModelsAnimeReleasesV1Release | null;
 }>();
+
+const preview = computed(() => {
+  return `https://anilibria.top${props.anime?.poster?.optimized?.preview}`
+})
 </script>
 
 <template>
   <article class="flex flex-col items-center gap-3 cursor-pointer w-full">
     <div class="relative w-full aspect-[3/4.248] rounded-[15px] overflow-hidden">
       <img
-        :src="anime?.poster"
+        :src="preview"
         class="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
       />
 
@@ -19,7 +23,7 @@ defineProps<{
       >
       <span v-text="anime?.description" />
 
-        <span>Дата выхода: {{ anime?.season.description }} - {{ anime?.year }}</span>
+        <span>Дата выхода: {{ anime?.description }} - {{ anime?.year }}</span>
       </div>
     </div>
 

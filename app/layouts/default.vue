@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import Header from "@/widgets/header";
 import Footer from "@/widgets/footer";
-
-useAsyncData(`currentUser`, () => useGetUser(), {
-  server: true,
-  immediate: true,
-});
 </script>
 
 <template>

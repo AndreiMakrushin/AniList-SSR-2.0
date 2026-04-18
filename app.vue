@@ -9,3 +9,5 @@
     <NuxtPage />
   </NuxtLayout>
 </template>
+
+<style scoped>@import "~/shared/assets/css/main.css";</style>

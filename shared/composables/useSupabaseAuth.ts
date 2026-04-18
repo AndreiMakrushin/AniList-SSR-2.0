@@ -1,13 +1,9 @@
-import type { SupabaseClient } from '@supabase/supabase-js'
-import type { IUser } from '~/shared/types'
-
-export const useSupabaseApi = () => {
+export const useSupabaseAuth = () => {
     const { $supabase } = useNuxtApp()
-  const supabase = $supabase as SupabaseClient
    
     return{
         signUp: async (email: string, password: string) => {
-            const { data, error } = await supabase.auth.signUp({
+            const { data, error } = await $supabase.auth.signUp({
                 email,
                 password
             })
@@ -15,7 +11,7 @@ export const useSupabaseApi = () => {
         },
 
         signIn: async (email: string, password: string) => {
-            const { data, error } = await supabase.auth.signInWithPassword({
+            const { data, error } = await $supabase.auth.signInWithPassword({
                 email,
                 password
             })
@@ -23,7 +19,7 @@ export const useSupabaseApi = () => {
         },
 
         getUserFromTable: async (email: string) => {
-            const { data, error  } = await supabase
+            const { data, error  } = await $supabase
             .from('users')
             .select<string, IUser>()
             .eq('email', email)
@@ -32,24 +28,24 @@ export const useSupabaseApi = () => {
         },              
 
         insertUser: async (name: string, email: string) => {
-            const { error: insertError } = await supabase
+            const { error: insertError } = await $supabase
             .from('users')
             .insert({ name, email })
             return { error: insertError }
         }, 
         
         getSession: async () => {
-            const { data, error } = await supabase.auth.getSession()
+            const { data, error } = await $supabase.auth.getSession()
             return { data, error }
         },
 
         getUser: async () => {
-            const { data, error } = await supabase.auth.getUser()
+            const { data, error } = await $supabase.auth.getUser()
             return { data, error }
         },
 
         deleteUserAvatar: async (id: string) =>{
-            const { error } = await supabase
+            const { error } = await $supabase
             .from('users')
             .update({ avatar_url: null })
             .eq('id', id)

@@ -1,9 +1,9 @@
 import type { IUser, TUserResponse } from '~/shared/types'
-import { useSupabaseApi } from './useSupabaseApi'
+import { useSupabaseAuth } from './useSupabaseAuth'
 
 export const useGetUserSession = async (): Promise<TUserResponse<IUser>> => {
 
-  const { getSession, getUser, getUserFromTable } = useSupabaseApi()
+  const { getSession, getUser, getUserFromTable } = useSupabaseAuth()
 
   try {
     const { data: session, error: sessionError } = await getSession()

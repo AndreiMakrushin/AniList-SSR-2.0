@@ -6,7 +6,7 @@ export interface IUser {
     avatar_url: string
   }
 
- export interface ApiResponse {
+ export interface IApiResponse {
     data: TAnime[];
     pagination?: {
       total: number;
