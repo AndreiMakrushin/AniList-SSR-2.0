@@ -10,8 +10,8 @@ export const useApi = () => {
     return {
         api,
         Anime: {
-            getList: (pageNum: number, pageLimit: number) => api.anime['deb730A26Ed7580E04C822A12B782831']({page: pageNum, limit: pageLimit}),
-            getAnime: (id: number) => api.anime['1A04F3Ab108F6960Aacb815Ecabe29D2'](id),
+            getList: (pageNum: number, pageLimit: number) => api.anime.animeControllerGetReleases({page: pageNum, limit: pageLimit}),
+            getAnime: (enName: string) => api.anime.animeControllerSearch({q: enName}),
 
         }
     }
