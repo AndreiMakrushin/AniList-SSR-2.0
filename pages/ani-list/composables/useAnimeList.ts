@@ -9,12 +9,14 @@ export const useAnimeList = () => {
 
     const fetchAnimeList = async (pageNum: number, limit: number) => {
         const response = await Anime.getList(pageNum, limit)
+        console.log(response);
         if (response.error) {
             error.value = true
             return
         }
         if (response.data.data) {
             animeList.value = animeList.value.concat(response.data.data);
+            
         }
     }
 

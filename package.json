@@ -35,7 +35,6 @@
     "@nuxt/types": "^2.18.1",
     "@nuxtjs/tailwindcss": "^6.13.2",
     "@primevue/nuxt-module": "^4.3.3",
-    "@supabase/supabase-js": "^2.49.3",
     "@vitejs/plugin-vue": "^5.2.4",
     "@vue/compiler-sfc": "^3.5.17",
     "eslint": "^8.57.1",

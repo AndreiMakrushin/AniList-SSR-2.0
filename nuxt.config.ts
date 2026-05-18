@@ -49,21 +49,19 @@ export default defineNuxtConfig({
     viewer: false,
     configPath: "nuxt-tailwind.config",
   },
-
-  runtimeConfig:{
-    public:{
-      SUPABASE_URL: "",
-      SUPABASE_KEY: "",
-      ANILIBRIA_API: "",
-      ANIME_LIST: "",
-      ANIME_SINGLE: "",
-      ANIME_SEARCH: "",
-      ANIME_SIMILAR: "",
-      ANIME_POSTER: ""
+   app: {
+    head: {
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }
+      ]
     }
   },
 
-  plugins: ["~/plugins/supabase.client"],
+  runtimeConfig:{
+    public:{
+      ANILIBRIA_API: "",
+    }
+  },
 
   alias: {
     '@': path.resolve(__dirname),

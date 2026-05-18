@@ -23,7 +23,7 @@ const preview = computed(() => {
       >
       <span v-text="anime?.description" />
 
-        <span>Дата выхода: {{ anime?.description }} - {{ anime?.year }}</span>
+        <span>Дата выхода: {{ anime?.year }}</span>
       </div>
     </div>
 
@@ -37,3 +37,8 @@ const preview = computed(() => {
     </div>
   </article>
 </template>
+
+<style scoped>
+.scrollbar::-webkit-scrollbar {
+    display: none;
+}</style>

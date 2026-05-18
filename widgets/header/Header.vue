@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useLogout } from "~/shared/composables/useLogout";
 import MenuLayout from "~/shared/components/layouts/menu-layout";
 import AnimeBySearch from "./widgets/anime-by-search";
 import Avatar from "~/shared/ui/avatar/Avatar.vue";
@@ -18,7 +17,7 @@ const userAvatar = computed(() => {
 });
 
 const logout = async () => {
-  await useLogout();
+  // await useLogout();
   user.value = null;
 };
 

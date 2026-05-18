@@ -22,8 +22,8 @@ const currentYear = new Date().getFullYear();
       <p>© {{ currentYear }} AniList.</p>
 
       <span
-        >Api для аниме используется
-        <a class="text-red-300" href="https://anilibria.wtf/" target="_blank">anilibria.wtf</a></span
+        ><span>Api для аниме используется</span>
+        <a class="text-red-300" href="https://anilibria.wtf" target="_blank">anilibria.wtf</a></span
       >
     </div>
   </footer>

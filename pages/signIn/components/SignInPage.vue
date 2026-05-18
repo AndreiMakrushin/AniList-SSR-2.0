@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import type { ILoginForm } from "@/shared/types";
-import { useAuth } from "@/shared/composables/useAuth";
-import { useGetUser } from "@/shared/composables/useGetUser";
 
 const user: ILoginForm = {
   email: "",
@@ -11,14 +9,14 @@ const user: ILoginForm = {
 const error = ref<string | null>(null);
 
 const handleLogin = async () => {
-  const result = await useAuth(user);
+  /* const result = await useAuth(user);
 
   if (result.error) {
     error.value = result.error.message;
   } else {
     await useGetUser();
     navigateTo("/");
-  }
+  } */
 };
 </script>
 
