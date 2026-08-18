@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import type { ILoginForm } from "@/shared/types";
+import { useSignState } from "./composables/useSignState";
+
+const { signIn } = useSignState();
 
 const user: ILoginForm = {
   email: "",
@@ -9,22 +12,19 @@ const user: ILoginForm = {
 const error = ref<string | null>(null);
 
 const handleLogin = async () => {
-  /* const result = await useAuth(user);
-
-  if (result.error) {
-    error.value = result.error.message;
-  } else {
-    await useGetUser();
+  const response = await signIn(user);
+  if (response) {
     navigateTo("/");
-  } */
+  }
 };
 </script>
 
 <template>
   <div class="min-h-screen flex relative items-center">
-  <img
-        src="@/shared/assets/image/greeting.png"
-        class="absolute h-full max-pads:hidden right-10">
+    <img
+      src="@/shared/assets/image/greeting.png"
+      class="absolute h-full max-pads:hidden right-10"
+    />
 
     <div class="flex flex-col gap-10 items-center max-pads:p-4 w-full">
       <h1 class="text-5xl max-pads:text-3xl text-center">Добро пожаловать в AniList</h1>

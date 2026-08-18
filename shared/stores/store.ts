@@ -1,9 +1,9 @@
 // ~/shared/stores/animeStore.ts
-import type { IUser } from "~/shared/types"
+import type { UserDto } from "~/api-client/Api";
 import { defineStore } from "pinia"
 
 export const useAnimeStore = defineStore('anime', () => {
-    const user = ref<IUser | null>(null)
+    const user = ref<UserDto | null>(null)
 
     return {
         user

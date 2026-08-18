@@ -3,14 +3,14 @@ import Player from "~/widgets/player/Player.vue";
 /* import { useAnimeStore } from "@/shared/stores/store"; */
 /* import { animeStatus } from "~/shared/helpers/animeStatuses";
 import { useSupabaseAnime } from "~/shared/composables/useSupabaseAnime"; */
-import { useGetAnime } from "./composables/useGetAnime";
+import { useAnimeState } from "./composables/useAnimeState";
 const props = defineProps<{
   episode: string;
   idAnime: string;
 }>();
 
 /* const store = storeToRefs(useAnimeStore()); */
-const { anime, getAnime } = useGetAnime();
+const { anime, getAnime } = useAnimeState();
 onMounted(async () => {
   await getAnime(+props.idAnime);
 });
@@ -96,8 +96,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="w-full flex flex-row gap-5 p-4 text-white">
-    <div class="w-full md:w-[300px] max-pads:hidden flex-shrink-0 flex flex-col gap-5">
+  <div class="w-full flex flex-row gap-5 p-4 text-white relative h-full">
+
+    <div class="w-full md:w-[300px] max-pads:hidden flex-shrink-0 flex flex-col gap-5 sticky top-0 h-fit">
       <div class="relative aspect-[2/3] rounded-xl overflow-hidden bg-gray-800/50">
         <img
           class="w-full h-full object-cover transition-opacity duration-300"

@@ -3,24 +3,28 @@ import MenuLayout from "~/shared/components/layouts/menu-layout";
 import AnimeBySearch from "./widgets/anime-by-search";
 import Avatar from "~/shared/ui/avatar/Avatar.vue";
 import Button from "~/shared/ui/button/Button.vue";
-import { useAnimeStore } from "@/shared/stores/store";
 import PopperMenu from "@/shared/ui/poppers/popper-menu/PopperMenu.vue";
+import type { UserDto } from "~/api-client/Api";
 
-const { user } = storeToRefs(useAnimeStore());
-
-const goPageLK = () => {
-  navigateTo(`/lk/${user.value!.id}/history`);
-};
+ const props = defineProps<{
+  user: UserDto | null;
+}>()
 
 const userAvatar = computed(() => {
-  return user.value?.avatar_url;
+  return props.user?.avatar
 });
 
-const logout = async () => {
-  // await useLogout();
-  user.value = null;
-};
+const emit = defineEmits<{
+  (e: 'logout'): void 
+  (e: 'goPageLK'): void
+}>()
 
+const goPageLK = () => {
+  emit('goPageLK');
+}
+const logout = () => {
+  emit('logout');
+}
 </script>
 
 <template>

@@ -1,3 +1,3 @@
-import SignInPage from './components/SignInPage.vue'
+import SignInPage from './SignInPage.vue'
 
 export default SignInPage

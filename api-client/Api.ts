@@ -10,6 +10,19 @@
  * ---------------------------------------------------------------
  */
 
+export interface UserDto {
+  /** @example 1 */
+  id?: number;
+  /** @example "Иван Иванов" */
+  name?: string;
+  /** @example "user@example.com" */
+  email?: string;
+  /** @example false */
+  isBanned?: boolean;
+  /** @example "https://i.pravatar.cc/300" */
+  avatar?: string;
+}
+
 export interface UserCreateDto {
   /**
    * Имя пользователя
@@ -41,9 +54,81 @@ export interface UserLoginDto {
   password: string;
 }
 
+export interface UserLoginResponseDto {
+  /** @example "access_token" */
+  access_token: string;
+}
+
+export interface AnimeValueType {
+  value: string;
+  description: string;
+}
+
+export interface AnimeName {
+  main: string;
+  english: string;
+  alternative: string;
+}
+
+export interface AnimeImage {
+  preview: string;
+  thumbnail: string;
+  optimized?: object;
+}
+
+export interface AnimeAgeRating {
+  value: string;
+  label: string;
+  is_adult: boolean;
+  description: string;
+}
+
+export interface AnimePublishDay {
+  value: number;
+  description: string;
+}
+
+export interface AnimeGenre {
+  id: number;
+  name: string;
+  image: AnimeImage;
+  total_releases: number;
+}
+
+export interface Anime {
+  id: number;
+  type: AnimeValueType;
+  year: number;
+  name: AnimeName;
+  alias: string;
+  season: AnimeValueType;
+  poster: AnimeImage;
+  fresh_at: string;
+  created_at: string;
+  updated_at: string;
+  is_ongoing: boolean;
+  age_rating: AnimeAgeRating;
+  publish_day: AnimePublishDay;
+  description: string;
+  notification: string;
+  episodes_total: number;
+  external_player: string;
+  is_in_production: boolean;
+  is_blocked_by_geo: boolean;
+  is_blocked_by_copyrights: boolean;
+  added_in_users_favorites: number;
+  average_duration_of_episode: number;
+  added_in_planned_collection: number;
+  added_in_watched_collection: number;
+  added_in_watching_collection: number;
+  added_in_postponed_collection: number;
+  added_in_abandoned_collection: number;
+  genres: AnimeGenre[];
+}
+
 export interface PaginationLinks {
-  previous: object;
-  next: object;
+  previous: object | null;
+  next: object | null;
 }
 
 export interface Pagination {
@@ -60,8 +145,12 @@ export interface AnimeMeta {
 }
 
 export interface AnimeReleasesResponse {
-  data: any[][];
+  data: Anime[];
   meta: AnimeMeta;
+}
+
+export interface AnimeResponse {
+  data: Anime;
 }
 
 export type QueryParamsType = Record<string | number, any>;
@@ -340,22 +429,23 @@ export class Api<
     userControllerFindUser: (
       query?: {
         /**
-         * Email
-         * @example ""
+         * Email пользователя
+         * @example "user@example.com"
          */
         email?: string;
         /**
          * ID пользователя
-         * @example null
+         * @example 1
          */
         id?: number;
       },
       params: RequestParams = {},
     ) =>
-      this.request<void, any>({
+      this.request<UserDto, any>({
         path: `/user/find`,
         method: "GET",
         query: query,
+        format: "json",
         ...params,
       }),
   };
@@ -384,11 +474,12 @@ export class Api<
      * @request POST:/auth/login
      */
     authControllerLogin: (data: UserLoginDto, params: RequestParams = {}) =>
-      this.request<void, any>({
+      this.request<UserLoginResponseDto, any>({
         path: `/auth/login`,
         method: "POST",
         body: data,
         type: ContentType.Json,
+        format: "json",
         ...params,
       }),
   };
@@ -424,21 +515,45 @@ export class Api<
      * No description
      *
      * @tags Anime - сторонняя библиотека
-     * @name AnimeControllerSearch
-     * @summary Поиск аниме
-     * @request GET:/anime/search
+     * @name AnimeControllerSearchByName
+     * @summary Поиск аниме по названию
+     * @request GET:/anime/search-by-name
      */
-    animeControllerSearch: (
+    animeControllerSearchByName: (
       query: {
-        /** Поисковый запрос */
-        q: string;
+        /** Название аниме для поиска */
+        animeName: string;
       },
       params: RequestParams = {},
     ) =>
-      this.request<void, any>({
-        path: `/anime/search`,
+      this.request<AnimeReleasesResponse, any>({
+        path: `/anime/search-by-name`,
         method: "GET",
         query: query,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Anime - сторонняя библиотека
+     * @name AnimeControllerSearchById
+     * @summary Поиск аниме по ID
+     * @request GET:/anime/search-by-id
+     */
+    animeControllerSearchById: (
+      query: {
+        /** ID аниме */
+        id: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<AnimeResponse, any>({
+        path: `/anime/search-by-id`,
+        method: "GET",
+        query: query,
+        format: "json",
         ...params,
       }),
   };
